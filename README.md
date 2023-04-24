@@ -9,10 +9,15 @@ clone
 npm install
 ```
 
-# How to dev
+# How to start
 
 ```
 npm run dev
 ```
 
 then open the link printed in the terminal.
+Then webgl build should load automatically.
+
+# How to update the webgl build
+
+Webgl builds are inside the directory `public/build`
