@@ -14,3 +14,5 @@ npm install
 ```
 npm run dev
 ```
+
+then open the link printed in the terminal.
