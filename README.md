@@ -18,6 +18,12 @@ npm run dev
 then open the link printed in the terminal.
 Then webgl build should load automatically.
 
-# How to update the webgl build
+# Updating webgl build
 
 Webgl builds are inside the directory `public/build`
+
+# Updating Web's event handlers
+
+code lives at `App.tsx`
+
+There's a default event implemented right now with the listening to the `onTheUnityToReactEvent`
