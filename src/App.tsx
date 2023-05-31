@@ -1,59 +1,49 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import './App.css'
 import { Unity, useUnityContext } from "react-unity-webgl";
 import { UnityProvider } from "react-unity-webgl/distribution/types/unity-provider";
 
 function useUnity(): UnityProvider {
-  const { unityProvider, sendMessage, addEventListener } = useUnityContext({
+  const { unityProvider, UNSAFE__unityInstance } = useUnityContext({
     loaderUrl: "build/myunityapp.loader.js",
     dataUrl: "build/myunityapp.data",
     frameworkUrl: "build/myunityapp.framework.js",
     codeUrl: "build/myunityapp.wasm",
   });
 
-  const TheEventName = 'theReactUnityEvent';
-  const handleEvent = useCallback(
-    (...args: any[]) => {
-      (async (args: any[]) => {   
-      console.log('[unity-web communication] triggered onAnimocaStake cb from Unity - payload from unity:', ...args);
+  const unityInstace = UNSAFE__unityInstance;
 
-      await new Promise((resolve) => setTimeout(resolve, 500));
+  const dispatchActionToWeb = function (action: string, payload: string, callback: (unityInstance: any, payload: string) => any) {
+    console.log(`[web] received action from unity. action=${action}. payload=${payload}`)
+    switch (action) {
+      case "test":
+        var obj = JSON.parse(payload);
+        var num = obj.num;
+        num++;
+        
+        obj.num=num;
+        
+        var message = JSON.stringify(obj);
+        console.log("[web] message: " + message);
+        callback(unityInstace, message);
+        break;
 
-      sendMessage('RaceStakingContractBridge' , TheEventName, {
-        payloadEvent: 'completed',
-      });
+      default:
+        console.log(`[web] unknown action from unity. action=${action}`)
+        break;
+    }
+  };
 
-      })(args);
-    },
-    []
-  );
+  useEffect(() => {
+    window.unityContext = {
+      unityInstace: unityInstace,
+      dispatchActionToWeb: dispatchActionToWeb
+    }
 
-  const UnityToReactEventName = 'onTheUnityToReactEvent'
-  useEffect(
-    function () {
-      addEventListener(UnityToReactEventName, handleEvent);
-
-      return function cleanup() {
-        addEventListener(UnityToReactEventName, handleEvent);
-      };
-    },
-    [handleEvent]
-  );
-
-  const handleUnityReady = useCallback(
-    () => console.log('(success) received UnityReady event'), []);
-  const UnityReadyEventName = 'UnityReady'
-  useEffect(
-    function () {
-      addEventListener(UnityReadyEventName, handleUnityReady);
-
-      return function cleanup() {
-        addEventListener(UnityReadyEventName, handleUnityReady);
-      };
-    },
-    [handleUnityReady]
-  );
-
+    return () => {
+      window.unityContext = undefined
+    }
+  }, [dispatchActionToWeb, unityInstace]);
 
   return unityProvider
 }
