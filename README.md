@@ -28,4 +28,6 @@ Webgl builds are inside the directory `public/build`
 
 code lives at `App.tsx`
 
+https://github.com/Highstreet-World/react-unity-webgl-sandbox/blob/819c7ea230496871dc6796ab02baf3d155c604fd/src/App.tsx#L18
+
 ![image](https://github.com/Highstreet-World/react-unity-webgl-sandbox/assets/9751082/1bb352be-9900-49f6-8db5-29458afe7fb6)
