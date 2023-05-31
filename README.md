@@ -1,6 +1,8 @@
 # react-unity-webgl-sandbox
 a sandbox env to test out react + unity webl with the help of the lib react-unity-webgl
 
+![image](https://github.com/Highstreet-World/react-unity-webgl-sandbox/assets/9751082/da00f2f8-c206-44b0-9ba4-1c53b50d541a)
+
 # Setup
 
 clone
@@ -26,4 +28,4 @@ Webgl builds are inside the directory `public/build`
 
 code lives at `App.tsx`
 
-There's a default event implemented right now with the listening to the `onTheUnityToReactEvent`
+![image](https://github.com/Highstreet-World/react-unity-webgl-sandbox/assets/9751082/1bb352be-9900-49f6-8db5-29458afe7fb6)
